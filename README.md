@@ -1,6 +1,6 @@
 # DJIWaypointMissionDocs  
 
-## DJI Waypoint class  
+## DJI Waypoint  
 The class represents a target point in the waypoint mission. For a waypoint mission, a flight route consists of multiple Waypoint objects. The user can also define the actions to perform for each Waypoint.
 \
 constructor method
@@ -46,15 +46,41 @@ Gimbal pitch angle when reached this waypoint. This property is used when the is
 </details>
 
 \
-\
 property speed
 ```
 @FloatRange(from = MIN_SPEED, to = MAX_SPEED) float speed
 ```
-*Description*
+<details>
+  <summary>Description:</summary>
+
 The base automatic speed of the aircraft as it moves between this waypoint and the next waypoint with range [0, 15] m/s. By default, it is 0.0 and the aircraft will fly with getAutoFlightSpeed of the waypoint mission. If greater than 0, 'speed' will override getAutoFlightSpeed. This 'speed' can only define movement forward through the waypoint mission in comparison to getAutoFlightSpeed which can be both forward and backwards through a waypoint mission.
 Waypoint mission speed priority from highest to lowest is:
 1) manual speed adjustment with remote controller joy sticks
 2) 'speed'
 3) setAutoFlightSpeed
 4) getAutoFlightSpeed
+</details>
+
+\
+## DJI WaypointAction  
+This class represents a waypoint action for Waypoint. It determines what action is performed when the aircraft reaches the corresponding waypoint.
+\
+```
+WaypointAction(WaypointActionType actionType, int actionParam)
+waypoint.addAction(action)
+```
+<details>
+  <summary>Description:</summary>
+
+Adds a waypoint action to a waypoint. The number of waypoint actions should not be larger than MAX_ACTION_COUNT. The action will only be executed when the mission's getFlightPathMode property is set to NORMAL and will not be executed when the mission's getFlightPathMode property is set to CURVED. The maximum number of waypoint actions you can add is 15.
+</details>
+
+\
+## DJI WaypointMission  
+<details>
+  <summary>Description:</summary>
+
+In the waypoint mission, the aircraft will travel between waypoints, execute actions at waypoints, and adjust heading and altitude between waypoints. Waypoints are physical locations to which the aircraft will fly. Creating a series of waypoints, in effect, will program a flight route for the aircraft to follow. Actions can also be added to waypoints, which will be carried out when the aircraft reaches the waypoint. The aircraft travels between waypoints automatically at a base speed. However, the user can change the speed by using the pitch joystick. If the stick is pushed up, the speed will increase. If the stick is pushed down, the speed will slow down. The stick can be pushed down to stop the aircraft and further pushed to start making the aircraft travel back along the path it came. When the aircraft is traveling through waypoints in the reverse order, it will not execute waypoint actions at each waypoint. If the stick is released, the aircraft will again travel through the waypoints in the original order, and continue to execute waypoint actions (even if executed previously). If the aircraft is pulled back along the waypoint mission all the way to the first waypoint, then it will hover in place until the stick is released enough for it to again progress through the mission from start to finish. It is not supported by Mavic Pro when using WiFi connection. It is not supported by Spark.
+</details>
+
+\
