@@ -17,9 +17,12 @@ property altitude
 ```
 @FloatRange(from = MIN_ALTITUDE, to = MAX_ALTITUDE) float altitude
 ```
-*Description:*  
+<details>
+  <summary>*Description:*</summary>
+  
 Altitude of the aircraft in meters when it reaches waypoint. The altitude of the aircraft is relative to the ground at the take-off location, has a range of [-200,500], and should not be larger than the aircraft's maximum altitude. If two adjacent waypoints have different altitudes, the altitude will gradually change as the aircraft flys between waypoints.
-\
+</details>
+
 \
 property heading
 ```
